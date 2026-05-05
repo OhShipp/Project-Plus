@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project+ Codex · Jedi Academy</title>
+<style>
+:root {
+  --bg-1: #ffffff;
+  --bg-2: #FAFAF6;
+  --bg-3: #F2F0E9;
+  --tx-1: #1a1a1a;
+  --tx-2: #5F5E5A;
+  --tx-3: #8E8C84;
+  --bd-1: #E8E5DC;
+  --bd-2: #C8C5BB;
+  --tx-d: #C73E3E;
+  --bd-d: #F0B5B5;
+  --bg-d: #FCEBEB;
+  --tx-g: #0F6E56;
+  --bd-g: #5DCAA5;
+  --bg-g: #E1F5EE;
+  --tx-am: #854F0B;
+  --bd-am: #FAC775;
+  --bg-am: #FAEEDA;
+  --bd-am2: #EF9F27;
+  --tx-am2: #BA7517;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Source Code Pro", monospace;
+  --r-md: 8px;
+  --r-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-1: #1c1c1a;
+    --bg-2: #25241F;
+    --bg-3: #16161410;
+    --tx-1: #ECEAE3;
+    --tx-2: #A09D94;
+    --tx-3: #6E6B62;
+    --bd-1: #36342D;
+    --bd-2: #4A4740;
+    --bg-d: #3A1F1F;
+    --bd-d: #6A3030;
+    --bg-g: #1A3A2A;
+    --bd-g: #2D6E50;
+    --bg-am: #3A2A14;
+    --bd-am: #6A5028;
+    --tx-am: #FAC775;
+  }
+}
+:root[data-theme="dark"] {
+  --bg-1: #1c1c1a;
+  --bg-2: #25241F;
+  --bg-3: #161614;
+  --tx-1: #ECEAE3;
+  --tx-2: #A09D94;
+  --tx-3: #6E6B62;
+  --bd-1: #36342D;
+  --bd-2: #4A4740;
+  --bg-d: #3A1F1F;
+  --bd-d: #6A3030;
+  --bg-g: #1A3A2A;
+  --bd-g: #2D6E50;
+  --bg-am: #3A2A14;
+  --bd-am: #6A5028;
+  --tx-am: #FAC775;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #EF9F27; border-radius: 3px; opacity: 0.6; }
+::-webkit-scrollbar-track { background: transparent; }
+textarea, input, select, button { font-family: var(--font-sans); }
+
+body {
+  background: var(--bg-3);
+  margin: 0; padding: 18px 16px;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--tx-1);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.wrap { max-width: 1180px; margin: 0 auto; }
+.top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; padding: 0 4px; }
+.brand-amber { font-family: var(--font-mono); font-size: 10px; color: #EF9F27; letter-spacing: 0.2em; font-weight: 500; }
+.brand-main { font-size: 22px; font-weight: 500; letter-spacing: -0.01em; margin-top: 2px; color: var(--tx-1); }
+.brand-sub { font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px; }
+.top-actions { display: flex; gap: 8px; align-items: center; }
+
+.app { display: flex; height: 740px; border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); overflow: hidden; background: var(--bg-1); }
+
+/* Sidebar */
+.sb { width: 210px; min-width: 210px; display: flex; flex-direction: column; background: var(--bg-2); border-right: 0.5px solid var(--bd-1); }
+.sb-top { padding: 12px 14px 11px; border-bottom: 0.5px solid var(--bd-1); position: relative; }
+.sb-top::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 36px; height: 2px; background: #EF9F27; }
+.b1 { font-family: var(--font-mono); font-size: 9px; font-weight: 500; color: #EF9F27; letter-spacing: 0.18em; text-transform: uppercase; }
+.b2 { font-size: 14px; font-weight: 500; color: var(--tx-1); margin-top: 3px; letter-spacing: -0.01em; }
+.b3 { font-family: var(--font-mono); font-size: 9px; color: var(--tx-2); margin-top: 1px; letter-spacing: 0.1em; text-transform: uppercase; }
+.sb-q { width: 100%; padding: 5px 9px; border-radius: var(--r-md); border: 0.5px solid var(--bd-1); background: var(--bg-1); font-size: 11px; color: var(--tx-1); outline: none; margin-top: 9px; font-family: var(--font-mono); }
+.sb-q::placeholder { color: var(--tx-3); font-style: italic; }
+.sb-q:focus { border-color: var(--bd-am); }
+.ch-list { flex: 1; overflow-y: auto; padding: 4px; }
+.chi { padding: 7px 10px; border-radius: var(--r-md); cursor: pointer; margin-bottom: 1px; border: 0.5px solid transparent; position: relative; transition: background 0.1s; }
+.chi:hover { background: var(--bg-1); }
+.chi.on { background: var(--bg-1); border-color: var(--bd-am); }
+.chi.on::before { content: ''; position: absolute; left: -4px; top: 50%; transform: translateY(-50%); width: 2px; height: 65%; background: #EF9F27; }
+.chi-num { font-family: var(--font-mono); font-size: 9px; color: var(--tx-3); letter-spacing: 0.05em; }
+.chi-name { font-size: 12px; color: var(--tx-1); line-height: 1.3; margin-top: 1px; }
+.chi-foot { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+.sdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.s0 { background: #888780; } .s1 { background: #EF9F27; } .s2 { background: #378ADD; } .s3 { background: #D85A30; } .s4 { background: #1D9E75; }
+.cs { font-size: 9px; color: #EF9F27; letter-spacing: -1px; line-height: 1; }
+.pt { font-size: 9px; font-family: var(--font-mono); color: var(--tx-2); margin-left: auto; letter-spacing: 0.02em; }
+
+.sb-bot { padding: 9px 12px 10px; border-top: 0.5px solid var(--bd-1); }
+.sb-stat { font-family: var(--font-mono); font-size: 9px; color: var(--tx-2); text-align: center; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.6; }
+.sb-quote { font-family: var(--font-mono); font-size: 8px; color: var(--tx-am2); text-align: center; letter-spacing: 0.1em; margin-top: 7px; font-style: italic; text-transform: uppercase; }
+
+/* Main */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; background: var(--bg-1); }
+.mhd { padding: 12px 16px 9px; border-bottom: 0.5px solid var(--bd-1); position: relative; }
+.mhd::after { content: ''; position: absolute; bottom: -1px; left: 16px; width: 60px; height: 2px; background: #EF9F27; }
+.mt { font-size: 17px; font-weight: 500; color: var(--tx-1); margin-bottom: 2px; letter-spacing: -0.01em; }
+.mo { font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+.mc { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.ssel { padding: 4px 9px; border-radius: var(--r-md); border: 0.5px solid var(--bd-am); background: transparent; font-size: 10px; font-family: var(--font-mono); color: var(--tx-1); outline: none; cursor: pointer; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; }
+.stars { display: flex; gap: 1px; align-items: center; }
+.star { font-size: 14px; cursor: pointer; background: none; border: none; padding: 0; color: var(--bd-2); line-height: 1; }
+.star.on { color: #EF9F27; }
+.cl { font-family: var(--font-mono); font-size: 9px; color: var(--tx-2); letter-spacing: 0.07em; text-transform: uppercase; }
+.pbw { margin-top: 7px; }
+.pb { height: 2px; background: var(--bd-1); overflow: hidden; }
+.pbf { height: 100%; background: #EF9F27; transition: width 0.3s; }
+.pbl { font-family: var(--font-mono); font-size: 9px; color: var(--tx-2); margin-top: 3px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* Tabs */
+.tbar { display: flex; border-bottom: 0.5px solid var(--bd-1); padding: 0 14px; flex-shrink: 0; overflow-x: auto; background: var(--bg-2); }
+.tbar::-webkit-scrollbar { height: 0; }
+.tb { padding: 9px 12px; font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); cursor: pointer; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; background: none; letter-spacing: 0.1em; text-transform: uppercase; }
+.tb:hover { color: var(--tx-1); }
+.tb.on { color: var(--tx-am); border-bottom-color: #EF9F27; font-weight: 500; }
+
+.tc { flex: 1; overflow-y: auto; padding: 14px 16px; }
+
+/* Section headers */
+.sec { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 0.5px solid var(--bd-1); position: relative; gap: 8px; flex-wrap: wrap; }
+.sec::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 24px; height: 2px; background: #EF9F27; }
+.st { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--tx-1); text-transform: uppercase; letter-spacing: 0.1em; }
+.st-sub { font-family: var(--font-mono); font-size: 10px; color: var(--tx-1); text-transform: uppercase; letter-spacing: 0.1em; margin: 18px 0 8px; padding-bottom: 5px; border-bottom: 0.5px solid var(--bd-1); position: relative; font-weight: 500; }
+.st-sub::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 18px; height: 2px; background: #EF9F27; }
+
+/* Note cards */
+.nc { background: var(--bg-1); border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); padding: 11px 13px; margin-bottom: 7px; }
+.nc:hover { border-color: var(--bd-am); }
+.nta { width: 100%; border: none; background: transparent; font-size: 13px; line-height: 1.7; color: var(--tx-1); resize: none; outline: none; min-height: 48px; overflow: hidden; font-family: var(--font-sans); }
+.nft { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; padding-top: 6px; border-top: 0.5px solid var(--bd-1); }
+.tin { border: none; background: transparent; outline: none; width: 80px; font-size: 10px; font-family: var(--font-mono); color: var(--tx-2); letter-spacing: 0.05em; }
+.bre { display: flex; gap: 4px; }
+
+/* Key terms */
+.kt { background: var(--bg-1); border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); margin-bottom: 8px; overflow: hidden; }
+.kt:hover { border-color: var(--bd-am); }
+.kth { display: grid; grid-template-columns: minmax(0, 130px) 1fr 26px; gap: 8px; padding: 10px 12px; align-items: start; }
+.ktin { border: none; background: transparent; outline: none; width: 100%; font-size: 13px; font-weight: 500; color: var(--tx-am); border-right: 0.5px solid var(--bd-1); padding-right: 8px; min-height: 20px; font-family: var(--font-mono); letter-spacing: 0.02em; resize: none; overflow: hidden; }
+.kdta { width: 100%; border: none; background: transparent; font-size: 12px; line-height: 1.55; color: var(--tx-2); resize: none; outline: none; min-height: 32px; overflow: hidden; font-family: var(--font-sans); }
+.ktexs { padding: 0 12px 10px; border-top: 0.5px solid var(--bd-1); }
+.ktexlbl { font-family: var(--font-mono); font-size: 8px; color: var(--tx-am2); letter-spacing: 0.12em; text-transform: uppercase; margin: 8px 0 5px; font-weight: 500; }
+.ktex { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px; padding: 6px 8px; background: var(--bg-2); border-radius: var(--r-md); border-left: 2px solid var(--bd-am); }
+.ktexb { color: #EF9F27; font-size: 11px; line-height: 1.5; flex-shrink: 0; margin-top: 1px; }
+.ktexta { flex: 1; border: none; background: transparent; font-size: 12px; line-height: 1.5; color: var(--tx-1); resize: none; outline: none; min-height: 18px; overflow: hidden; font-family: var(--font-sans); }
+.ktexim { max-width: 100%; max-height: 110px; object-fit: contain; border-radius: var(--r-md); background: var(--bg-2); margin-top: 5px; display: block; margin-left: 18px; }
+.ktexur { width: calc(100% - 18px); margin-left: 18px; padding: 3px 7px; border-radius: var(--r-md); border: 0.5px solid var(--bd-1); background: transparent; font-size: 10px; font-family: var(--font-mono); color: var(--tx-2); outline: none; margin-top: 4px; }
+.ktexx { background: none; border: none; color: var(--tx-d); cursor: pointer; font-size: 11px; padding: 0 3px; flex-shrink: 0; align-self: flex-start; margin-top: 1px; line-height: 1; }
+.ktexa { font-family: var(--font-mono); font-size: 9px; color: var(--tx-2); background: transparent; border: 0.5px dashed var(--bd-1); padding: 4px 9px; border-radius: var(--r-md); cursor: pointer; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 3px; font-weight: 500; }
+.ktexa:hover { color: var(--tx-am); border-color: var(--bd-am); background: var(--bg-am); }
+
+/* Lessons */
+.lr { display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-radius: var(--r-md); margin-bottom: 1px; }
+.lr:hover { background: var(--bg-2); }
+.lcb { width: 14px; height: 14px; border-radius: 2px; border: 1.5px solid var(--bd-2); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: transparent; padding: 0; font-size: 9px; color: white; font-weight: bold; }
+.lcb.on { background: #EF9F27; border-color: #EF9F27; }
+.ln { font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); min-width: 24px; letter-spacing: 0.02em; }
+.lt { font-size: 12px; color: var(--tx-1); flex: 1; line-height: 1.4; }
+.ld { font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); letter-spacing: 0.02em; }
+
+/* Quiz */
+.qz { background: var(--bg-1); border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); padding: 13px 15px; margin-bottom: 9px; }
+.qzn { font-family: var(--font-mono); font-size: 10px; color: #EF9F27; letter-spacing: 0.08em; font-weight: 500; }
+.qzq { font-size: 13px; color: var(--tx-1); line-height: 1.55; margin: 5px 0 12px; font-weight: 500; }
+.qzc { display: flex; gap: 10px; align-items: flex-start; padding: 8px 11px; border-radius: var(--r-md); margin-bottom: 4px; cursor: pointer; border: 0.5px solid var(--bd-1); transition: all 0.15s; }
+.qzc:hover { background: var(--bg-2); }
+.qzc.sel { background: var(--bg-am); border-color: var(--bd-am); }
+.qzc.cor { background: #EAF3DE; border-color: #97C459; }
+.qzc.inc { background: var(--bg-d); border-color: var(--bd-d); }
+:root[data-theme="dark"] .qzc.cor, :root:not([data-theme="light"]) .qzc.cor { background: #1A3A2A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .qzc.cor { background: #1A3A2A; } }
+.qzl { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--tx-1); min-width: 18px; letter-spacing: 0.05em; }
+.qzt { font-size: 12px; color: var(--tx-1); line-height: 1.5; flex: 1; }
+.qzex { margin-top: 9px; padding: 9px 11px; background: var(--bg-am); border-left: 2px solid #EF9F27; border-radius: var(--r-md); font-size: 12px; color: var(--tx-am); line-height: 1.6; }
+.qzex-l { font-family: var(--font-mono); font-size: 9px; color: var(--tx-am2); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; margin-bottom: 3px; }
+.qzbar { padding: 11px 14px; background: var(--bg-2); border-radius: var(--r-lg); margin-bottom: 11px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; border-left: 2px solid #EF9F27; }
+.qzscore { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--tx-1); letter-spacing: 0.02em; }
+.qzatt { font-family: var(--font-mono); font-size: 9px; color: var(--tx-2); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 2px; }
+
+/* Flashcards */
+.fcwrap { display: flex; flex-direction: column; align-items: center; padding: 6px 0; }
+.fcprog { font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 11px; }
+.fc { width: 100%; max-width: 420px; min-height: 220px; background: var(--bg-1); border: 0.5px solid var(--bd-am); border-radius: var(--r-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 24px; cursor: pointer; text-align: center; position: relative; transition: transform 0.15s; }
+.fc:hover { transform: translateY(-1px); }
+.fc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #EF9F27; }
+.fc::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: #EF9F27; }
+.fc-side { font-family: var(--font-mono); font-size: 8px; color: var(--tx-am2); letter-spacing: 0.18em; text-transform: uppercase; position: absolute; top: 8px; right: 12px; font-weight: 500; }
+.fcfront { font-size: 18px; font-weight: 500; color: var(--tx-1); font-family: var(--font-mono); letter-spacing: 0.01em; }
+.fcback { font-size: 13px; line-height: 1.65; color: var(--tx-1); max-width: 100%; }
+.fchint { font-family: var(--font-mono); font-size: 9px; color: var(--tx-3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 16px; }
+.fcctrl { display: flex; gap: 7px; align-items: center; margin-top: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* Schedule */
+.sf { background: var(--bg-1); border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); padding: 13px 15px; margin-bottom: 12px; }
+.sfg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sf label { font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); display: block; margin-bottom: 3px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; }
+.sfin { width: 100%; padding: 6px 9px; border-radius: var(--r-md); border: 0.5px solid var(--bd-1); background: transparent; font-size: 12px; color: var(--tx-1); outline: none; margin-bottom: 8px; font-family: var(--font-sans); }
+.sfin:focus { border-color: var(--bd-am); }
+.ssi { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: var(--bg-1); border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); margin-bottom: 5px; border-left: 2px solid #EF9F27; }
+.ssidt { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--tx-1); flex-shrink: 0; min-width: 120px; letter-spacing: 0.02em; }
+.ssin { font-size: 12px; color: var(--tx-2); flex: 1; }
+
+/* Buttons */
+.btn { padding: 4px 9px; border-radius: var(--r-md); border: 0.5px solid var(--bd-2); background: transparent; cursor: pointer; font-size: 10px; font-family: var(--font-mono); color: var(--tx-2); letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; }
+.btn:hover { background: var(--bg-2); color: var(--tx-1); }
+.btn.am { color: var(--tx-am); border-color: var(--bd-am); }
+.btn.am:hover { background: var(--bg-am); }
+.btn.am:disabled { opacity: 0.5; cursor: default; }
+.btn.d { color: var(--tx-d); border-color: var(--bd-d); }
+.btn.d:hover { background: var(--bg-d); }
+.btn-add { width: 100%; padding: 9px; border-radius: var(--r-lg); border: 0.5px dashed var(--bd-2); background: transparent; cursor: pointer; font-size: 11px; font-family: var(--font-mono); color: var(--tx-2); margin-top: 5px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; }
+.btn-add:hover { background: var(--bg-2); color: var(--tx-am); border-color: var(--bd-am); }
+.btn-pri { padding: 6px 14px; border-radius: var(--r-md); border: 0.5px solid #EF9F27; background: var(--bg-am); cursor: pointer; font-size: 11px; font-family: var(--font-mono); color: var(--tx-am); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+.btn-pri:hover { background: #FAC775; color: #4A1B0C; }
+.btn-pri:disabled { opacity: 0.5; cursor: default; }
+
+.empt { font-size: 12px; color: var(--tx-2); text-align: center; padding: 28px 12px; font-family: var(--font-mono); letter-spacing: 0.05em; }
+.empt-em { font-size: 10px; color: var(--tx-3); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.1em; font-style: italic; }
+
+/* Settings modal */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.modal-bg.on { display: flex; }
+.modal { background: var(--bg-1); border: 0.5px solid var(--bd-1); border-radius: var(--r-lg); padding: 20px 22px; max-width: 460px; width: 100%; max-height: 90vh; overflow-y: auto; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 0.5px solid var(--bd-1); position: relative; }
+.modal-head::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 28px; height: 2px; background: #EF9F27; }
+.modal-title { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--tx-1); letter-spacing: 0.1em; text-transform: uppercase; }
+.modal label { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--tx-2); letter-spacing: 0.08em; text-transform: uppercase; margin: 14px 0 5px; font-weight: 500; }
+.modal input, .modal select { width: 100%; padding: 7px 10px; border-radius: var(--r-md); border: 0.5px solid var(--bd-1); background: var(--bg-1); color: var(--tx-1); font-size: 13px; outline: none; font-family: var(--font-sans); }
+.modal input[type="password"] { font-family: var(--font-mono); letter-spacing: 0.05em; }
+.modal input:focus, .modal select:focus { border-color: var(--bd-am); }
+.modal-help { font-size: 11px; color: var(--tx-2); line-height: 1.5; margin-top: 5px; }
+.modal-help a { color: #EF9F27; }
+.modal-row { display: flex; gap: 8px; margin-top: 9px; flex-wrap: wrap; }
+.modal-foot { display: flex; justify-content: flex-end; margin-top: 18px; padding-top: 12px; border-top: 0.5px solid var(--bd-1); gap: 8px; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--tx-1); color: var(--bg-1); padding: 8px 16px; border-radius: var(--r-md); font-size: 12px; font-family: var(--font-mono); letter-spacing: 0.05em; z-index: 2000; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.toast.on { opacity: 1; }
+.toast.err { background: #C73E3E; color: white; }
+.toast.ok { background: #1D9E75; color: white; }
+
+footer { text-align: center; font-family: var(--font-mono); font-size: 9px; color: var(--tx-3); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 18px; padding: 10px; }
+footer span { color: #EF9F27; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="brand-amber">✦ JEDI ACADEMY</div>
+      <div class="brand-main">Project+ Codex</div>
+      <div class="brand-sub">CompTIA PK0-005 · Personal Training Holocron</div>
+    </div>
+    <div class="top-actions">
+      <button class="btn am" onclick="exportData()">⬇ export</button>
+      <button class="btn am" onclick="importData()">⬆ import</button>
+      <button class="btn am" onclick="openSettings()">⚙ settings</button>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="sb">
+      <div class="sb-top">
+        <div class="b1">✦ Jedi Academy</div>
+        <div class="b2">Project+ Codex</div>
+        <div class="b3">PK0-005 Training</div>
+        <input class="sb-q" id="sbq" placeholder="search archives..." oninput="filterCh(this.value)" />
+      </div>
+      <div class="ch-list" id="chList"></div>
+      <div class="sb-bot">
+        <div class="sb-stat" id="sbStat"></div>
+        <div class="sb-quote">may the force guide you</div>
+      </div>
+    </div>
+    <div class="main">
+      <div id="mhd" class="mhd"></div>
+      <div class="tbar" id="tbar"></div>
+      <div class="tc" id="tc"></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>✦</span> Project+ Codex · self-hosted edition · all data stays in your browser <span>✦</span>
+  </footer>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-bg" id="settingsBg" onclick="closeSettings(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="modal-title">⚙ Settings</div>
+      <button class="btn" onclick="closeSettings()">✕</button>
+    </div>
+
+    <label>Anthropic API Key</label>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" />
+    <div class="modal-help">
+      Get one free at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>. Stored only in your browser's localStorage — never sent anywhere except directly to Anthropic when you trigger an AI feature.
+    </div>
+    <div class="modal-row">
+      <button class="btn am" onclick="saveKey()">Save key</button>
+      <button class="btn d" onclick="clearKey()">Clear key</button>
+    </div>
+
+    <label>Model</label>
+    <select id="modelSelect" onchange="saveModel(this.value)">
+      <option value="claude-haiku-4-5-20251001">Haiku 4.5 — cheap & fast (recommended)</option>
+      <option value="claude-sonnet-4-6">Sonnet 4.6 — smarter, ~3x cost</option>
+      <option value="claude-opus-4-7">Opus 4.7 — flagship, ~5x cost</option>
+    </select>
+    <div class="modal-help">Haiku 4.5 handles note cleanup and quiz generation just fine. Switch up only if you want richer output.</div>
+
+    <label>Theme</label>
+    <select id="themeSelect" onchange="setTheme(this.value)">
+      <option value="auto">Auto — follow system</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+
+    <label>Reset</label>
+    <div class="modal-help">Clear all study data (notes, key terms, quizzes, schedule). Cannot be undone.</div>
+    <div class="modal-row">
+      <button class="btn d" onclick="resetAll()">Erase all data</button>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn am" onclick="closeSettings()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- API key prompt modal -->
+<div class="modal-bg" id="keyPromptBg">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="modal-title">✦ AI Feature</div>
+    </div>
+    <div style="font-size: 13px; color: var(--tx-1); line-height: 1.6; margin-bottom: 12px;">
+      To use AI features (clean notes, generate quizzes, create key terms), you'll need an Anthropic API key.
+    </div>
+    <label>Your API Key</label>
+    <input type="password" id="promptKeyInput" placeholder="sk-ant-..." autocomplete="off" />
+    <div class="modal-help">
+      Free to get at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>. New accounts often get free credits. Light study use costs pennies per month with Haiku.
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="dismissKeyPrompt()">Skip for now</button>
+      <button class="btn-pri" onclick="saveKeyFromPrompt()">Save & continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- Hidden file input for import -->
+<input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)" />
+
+<script>
+// =============================================
+// CHAPTERS DATA
+// =============================================
+const CHS = [
+  {id:'c1',title:'Project Management Basics',obj:'OBJ 1.1 & 1.10',lessons:[{n:5,t:'Project Management Basics',d:8},{n:6,t:'Project Management Skills',d:5},{n:7,t:'Benefits of Project Management',d:6},{n:8,t:'Types of Work',d:6},{n:9,t:'Organizational Structures',d:7},{n:10,t:'Roles and Responsibilities',d:12},{n:11,t:'Programs and Portfolios',d:5}]},
+  {id:'c2',title:'The Business Case',obj:'OBJ 2.1 & 4.1',lessons:[{n:12,t:'The Business Case',d:9},{n:13,t:'Current State and Future State',d:7},{n:14,t:'Financial Impact',d:9},{n:15,t:'ESG Factors',d:9}]},
+  {id:'c3',title:'Methodologies & Frameworks',obj:'OBJ 1.1',lessons:[{n:16,t:'Methodologies and Frameworks',d:10},{n:17,t:'Waterfall',d:4},{n:18,t:'Agile',d:7},{n:19,t:'Scrum',d:12},{n:20,t:'Kanban',d:6},{n:21,t:'Extreme Programming',d:7},{n:22,t:'DevOps & DevSecOps',d:7},{n:23,t:'Scaled Agile Framework',d:6},{n:24,t:'Software Development Life Cycle',d:6},{n:25,t:'PRINCE2',d:10}]},
+  {id:'c4',title:'Waterfall vs Agile',obj:'OBJ 1.2 & 1.10',lessons:[{n:26,t:'Comparing Waterfall and Agile',d:6},{n:27,t:'Product Ownership',d:6},{n:28,t:'Team Composition',d:3},{n:29,t:'Communication',d:4},{n:30,t:'Requirements',d:5},{n:31,t:'Budget and Schedule',d:4},{n:32,t:'Environmental Factors',d:4}]},
+  {id:'c5',title:'Initiating the Project',obj:'OBJ 1.10',lessons:[{n:33,t:'Initiating the Project',d:5},{n:34,t:'Team Roles and Responsibilities',d:7},{n:35,t:'Building the Project Team',d:3},{n:36,t:'Responsibility Assignment Matrix',d:3},{n:37,t:'Stakeholder Engagement',d:6},{n:38,t:'Project Initiation Documents',d:4},{n:39,t:'Performance Measures & Timeline Charts',d:9},{n:40,t:'Project Charter & Scope Statement',d:4},{n:41,t:'Records Management',d:6},{n:42,t:'Kickoff',d:2}]},
+  {id:'c6',title:'Facilitating Meetings',obj:'OBJ 1.8 & 1.9',lessons:[{n:43,t:'Facilitating Effective Meetings',d:6},{n:44,t:'Communication Methods',d:7},{n:45,t:'Communication Challenges',d:6},{n:46,t:'Meeting Roles',d:4},{n:47,t:'Informative Meetings',d:5},{n:48,t:'Decisive Meetings',d:3},{n:49,t:'Collaborative Meetings',d:8},{n:50,t:'Meeting Artifacts',d:5},{n:51,t:'Conflict Management',d:12}]},
+  {id:'c7',title:'Project Management Tools',obj:'OBJ 1.9, 1.10 & 3.2',lessons:[{n:52,t:'Project Management Tools',d:6},{n:53,t:'Installation Options',d:5},{n:54,t:'Meeting Tools',d:5},{n:55,t:'Productivity Tools',d:6},{n:56,t:'Common Diagrams',d:4},{n:57,t:'Collaboration Tools',d:8},{n:58,t:'Communication Tools',d:9},{n:59,t:'Elements of a Communication Plan',d:4},{n:60,t:'Develop a Communication Plan',d:6},{n:61,t:'Build an Escalation Plan',d:4},{n:62,t:'Maintain Communication Records',d:6}]},
+  {id:'c8',title:'Implementing Solution Design',obj:'OBJ 2.2, 3.3 & 4.2-4.4',lessons:[{n:63,t:'Implementing Solution Design',d:4},{n:64,t:'Solution Design Overview',d:6},{n:65,t:'Solution Design Example',d:8},{n:66,t:'Solution Design Approach',d:8},{n:67,t:'Solution Design in an Agile Project',d:3},{n:68,t:'Diminishing Returns & Pareto Principle',d:8},{n:69,t:'IT Infrastructure',d:11},{n:70,t:'Data Classification and Handling',d:10},{n:71,t:'Operational Security',d:9}]},
+  {id:'c9',title:'Managing Resources',obj:'OBJ 1.10, 2.3 & 3.3',lessons:[{n:72,t:'Managing Resources',d:5},{n:73,t:'Types of Resources',d:3},{n:74,t:'Resource Sourcing and Allocation',d:6},{n:75,t:'Calculating Shared Resource Capacity',d:3},{n:76,t:'The Resource Lifecycle',d:6},{n:77,t:'Conduct a Needs Assessment',d:5},{n:78,t:'Gap Analysis',d:5},{n:79,t:'Resource Optimization',d:4},{n:80,t:'Common Diagrams',d:5},{n:81,t:'Resource Management Process',d:6}]},
+  {id:'c10',title:'Managing Risk',obj:'OBJ 1.4 & 1.5',lessons:[{n:82,t:'Managing Risk',d:10},{n:83,t:'Risk vs Issues vs Changes',d:4},{n:84,t:'Risk Management Overview',d:5},{n:85,t:'Internal vs External Risk',d:7},{n:86,t:'Qualitative Risk Analysis',d:6},{n:87,t:'Quantitative Risk Analysis',d:6},{n:88,t:'Risk Management Strategies',d:4},{n:89,t:'Mitigation & Contingency Plans',d:7},{n:90,t:'Transition Plans',d:6}]},
+  {id:'c11',title:'Creating a Project Schedule',obj:'OBJ 1.6',lessons:[{n:91,t:'Creating a Project Schedule',d:9},{n:92,t:'Milestones',d:6},{n:93,t:'Project Cadence',d:2},{n:94,t:'Work Breakdown Structure',d:9},{n:95,t:'Creating the WBS',d:7},{n:96,t:'Project and Product Backlog',d:6},{n:97,t:'Project Tasks',d:4},{n:98,t:'Dependencies',d:6},{n:99,t:'Estimation Techniques',d:5},{n:100,t:'Resource Allocation',d:5}]},
+  {id:'c12',title:'Creating a Project Plan',obj:'OBJ 1.6',lessons:[{n:101,t:'Creating a Project Plan',d:4},{n:102,t:'Project Network Diagrams',d:7},{n:103,t:'Critical Path Method',d:10},{n:104,t:'Usefulness of CPM Outputs',d:13},{n:105,t:'Minimum Viable Product',d:9},{n:106,t:'Project Reserves',d:6},{n:107,t:'Calculating Project Reserves',d:9},{n:108,t:'Project Baselines',d:3},{n:109,t:'Project Budgets',d:3}]},
+  {id:'c13',title:'Quality Assurance & Procurement',obj:'OBJ 1.7, 1.10 & 1.11',lessons:[{n:110,t:'Quality Assurance Plan Overview',d:12},{n:111,t:'Types of Software Tests',d:5},{n:112,t:'Project Management Plan',d:8},{n:113,t:'Create a Test Plan',d:8},{n:114,t:'Procurement Process Overview',d:10},{n:115,t:'Evaluating Solutions',d:9},{n:116,t:'Evaluation Techniques',d:6},{n:117,t:'Procurement Contracts',d:13},{n:118,t:'Contract Terms',d:8}]},
+  {id:'c14',title:'Resolve Issues',obj:'OBJ 1.4, 1.5 & 1.6',lessons:[{n:129,t:'Resolve Issues',d:5},{n:130,t:'Issue Management Overview',d:3},{n:131,t:'Identify the Issue',d:7},{n:132,t:'Analyze the Issue',d:7},{n:133,t:'Issue Prioritization Tools',d:10},{n:134,t:'Resolve and Monitor the Issue',d:5},{n:135,t:'Control Charts',d:4}]},
+  {id:'c15',title:'Control Change',obj:'OBJ 1.3 & 4.5',lessons:[{n:136,t:'Control Change',d:4},{n:137,t:'Change Control Overview',d:6},{n:138,t:'Scope Change vs Scope Creep',d:13},{n:139,t:'IT Change Delivery Methods',d:7},{n:140,t:'IT Change Risk Mitigation',d:4},{n:141,t:'IT Environments',d:5}]},
+  {id:'c16',title:'Managing Performance',obj:'OBJ 1.6, 1.7 & 2.4',lessons:[{n:142,t:'Managing Performance',d:5},{n:143,t:'Scope & Budget Burndown Charts',d:5},{n:144,t:'Project Performance Gap Analysis',d:4},{n:145,t:'Contingency Reserve Utilization',d:4},{n:146,t:'Earned Value Management',d:4},{n:147,t:'Cost & Schedule Performance Metrics',d:4},{n:148,t:'Forecasting Performance',d:13},{n:149,t:'Rebaseline & Revise the Baseline',d:9},{n:150,t:'Project Dashboards',d:6}]},
+  {id:'c17',title:'Wrapping Up the Project',obj:'OBJ 2.4 & 2.5',lessons:[{n:151,t:'Wrapping Up the Project',d:7},{n:152,t:'Organizational Change Management',d:6},{n:153,t:'Connecting with End Users',d:4},{n:154,t:'Prepare for Project Closeout Reviews',d:3},{n:155,t:'Closing Phase Overview',d:4},{n:156,t:'Project Evaluation Overview',d:8},{n:157,t:'Project Closure Meeting',d:4},{n:158,t:'Project Closeout Report',d:6},{n:159,t:'Finish Resource Management Activities',d:6}]}
+];
+
+const SL = {'not-started':'Untrained','needs-scheduling':'Awaiting','studying':'In Training','review':'Reflection','mastered':'Jedi Master'};
+const SC = {'not-started':'s0','needs-scheduling':'s1','studying':'s2','review':'s3','mastered':'s4'};
+
+// =============================================
+// STATE
+// =============================================
+let st = {}, cid = 'c1', ctab = 'notes';
+let qzAns = {};
+let fcIdx = 0, fcFlip = false, fcShuffle = null;
+
+const STORAGE_KEY = 'jedi-projplus-codex-v1';
+const KEY_KEY = 'anthropic-api-key';
+const MODEL_KEY = 'anthropic-model';
+const THEME_KEY = 'theme-pref';
+let currentModel = localStorage.getItem(MODEL_KEY) || 'claude-haiku-4-5-20251001';
+
+function mkChState() {
+  return { status:'not-started', confidence:0, completedLessons:[], notes:[], keyTerms:[], sessions:[], quiz:[], attempts:[] };
+}
+function mks() { const s = {}; CHS.forEach(c => s[c.id] = mkChState()); return s; }
+function cs(id) { if (!st[id]) st[id] = mkChState(); return st[id]; }
+const e = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+
+function sv() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(st)); } catch(err) { console.error('Save failed:', err); }
+}
+
+function init() {
+  // Apply theme
+  applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
+  // Load state
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    st = raw ? JSON.parse(raw) : mks();
+    CHS.forEach(c => {
+      if (!st[c.id]) st[c.id] = mkChState();
+      const s = st[c.id];
+      s.notes = s.notes || []; s.keyTerms = s.keyTerms || []; s.sessions = s.sessions || [];
+      s.quiz = s.quiz || []; s.attempts = s.attempts || []; s.completedLessons = s.completedLessons || [];
+      s.keyTerms.forEach(t => { t.examples = t.examples || []; t.mastered = t.mastered || false; });
+    });
+  } catch(err) { st = mks(); }
+  render();
+}
+
+function render() { rSb(); rHd(); rTabs(); rTC(); rBot(); }
+
+// =============================================
+// RENDER FUNCTIONS
+// =============================================
+function filterCh(q) {
+  document.querySelectorAll('.chi').forEach(el => {
+    el.style.display = el.dataset.n.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function rBot() {
+  let tl=0, dl=0, ms=0, tt=0, kt=0;
+  CHS.forEach(c => {
+    tl += c.lessons.length;
+    dl += cs(c.id).completedLessons.length;
+    if (cs(c.id).status === 'mastered') ms++;
+    cs(c.id).attempts.forEach(() => tt++);
+    kt += cs(c.id).keyTerms.length;
+  });
+  document.getElementById('sbStat').innerHTML = `◆ ${dl}/${tl} lessons<br>★ ${ms}/${CHS.length} mastered<br>✦ ${kt} terms · ${tt} trials`;
+}
+
+function rSb() {
+  document.getElementById('chList').innerHTML = CHS.map((c,i) => {
+    const s = cs(c.id), done = s.completedLessons.length, total = c.lessons.length;
+    const stars = s.confidence ? '★'.repeat(s.confidence) : '';
+    return `<div class="chi${c.id===cid?' on':''}" data-n="${e(c.title)}" onclick="selCh('${c.id}')">
+      <div class="chi-num">CH ${String(i+1).padStart(2,'0')}</div>
+      <div class="chi-name">${e(c.title)}</div>
+      <div class="chi-foot">
+        <div class="sdot ${SC[s.status]||'s0'}"></div>
+        <span class="cs">${stars}</span>
+        <span class="pt">${done}/${total}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function rHd() {
+  const ch = CHS.find(c => c.id===cid), s = cs(cid);
+  const done = s.completedLessons.length, total = ch.lessons.length, pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('mhd').innerHTML = `
+    <div class="mt">${e(ch.title)}</div>
+    <div class="mo">${e(ch.obj)} · ${ch.lessons.length} holocrons</div>
+    <div class="mc">
+      <select class="ssel" onchange="setS(this.value)">${Object.entries(SL).map(([v,l]) => `<option value="${v}"${s.status===v?' selected':''}>${l}</option>`).join('')}</select>
+      <div class="stars" id="strEl">${rStars(s.confidence)}</div>
+      <span class="cl" id="clbl">${s.confidence ? `Force: ${s.confidence}/5` : 'Set Force'}</span>
+    </div>
+    <div class="pbw">
+      <div class="pb"><div class="pbf" style="width:${pct}%"></div></div>
+      <div class="pbl">▸ ${done}/${total} holocrons reviewed · ${pct}% complete</div>
+    </div>`;
+}
+function rStars(c) {
+  return [1,2,3,4,5].map(i => `<button class="star${i<=c?' on':''}" onclick="setC(${i})">${i<=c?'★':'☆'}</button>`).join('');
+}
+
+function rTabs() {
+  const T = [{id:'notes',l:'◈ Notes & Codex'},{id:'lessons',l:'▤ Holocrons'},{id:'quiz',l:'⚖ Trials'},{id:'flash',l:'◇ Crystals'},{id:'sched',l:'⏱ Schedule'}];
+  document.getElementById('tbar').innerHTML = T.map(t => `<button class="tb${t.id===ctab?' on':''}" onclick="selT('${t.id}')">${t.l}</button>`).join('');
+}
+
+function rTC() {
+  const tc = document.getElementById('tc');
+  if (ctab==='notes') tc.innerHTML = rNotesTerms();
+  else if (ctab==='lessons') tc.innerHTML = rLes();
+  else if (ctab==='quiz') tc.innerHTML = rQz();
+  else if (ctab==='flash') tc.innerHTML = rFc();
+  else if (ctab==='sched') tc.innerHTML = rSch();
+  ar();
+}
+
+function rNotesTerms() {
+  const s = cs(cid), n = s.notes, t = s.keyTerms;
+  let html = `<div class="sec"><span class="st">▸ Training Notes</span>
+    <div style="display:flex;gap:4px"><button class="btn am" id="cAll" onclick="aiCleanAll()">✦ Clean</button><button class="btn am" onclick="aiExpAll()">✦ Expand</button></div></div>`;
+  if (n.length) {
+    html += n.map(nn => `<div class="nc">
+      <textarea class="nta" id="nta-${nn.id}" oninput="onNC('${nn.id}',this)">${e(nn.text)}</textarea>
+      <div class="nft"><input class="tin" value="${e(nn.tag||'')}" placeholder="tag..." oninput="onTag('${nn.id}',this.value)" />
+        <div class="bre"><button class="btn am" id="nb-${nn.id}" onclick="aiClean1('${nn.id}')">✦ clean</button>
+        <button class="btn d" onclick="delN('${nn.id}')">✕</button></div></div>
+    </div>`).join('');
+  }
+  html += `<button class="btn-add" onclick="addN()">+ Add training note</button>`;
+  html += `<div class="st-sub">▸ Jedi Codex · Key Terms</div>
+   <div style="display:flex;gap:4px;justify-content:flex-end;margin-bottom:8px"><button class="btn am" id="genB" onclick="aiGenT()">✦ Generate from notes</button><button class="btn am" onclick="aiDefT()">✦ Define blanks</button></div>`;
+  if (t.length) {
+    html += t.map(tt => `<div class="kt">
+      <div class="kth">
+        <textarea class="ktin" oninput="onKT('${tt.id}','term',this)">${e(tt.term)}</textarea>
+        <textarea class="kdta" id="kd-${tt.id}" oninput="onKT('${tt.id}','def',this)">${e(tt.definition)}</textarea>
+        <button class="btn d" style="align-self:flex-start;padding:3px 6px" onclick="delT('${tt.id}')">✕</button>
+      </div>
+      <div class="ktexs">
+        <div class="ktexlbl">⬢ Examples & Visuals</div>
+        ${(tt.examples||[]).map(x => `<div>
+          <div class="ktex">
+            <span class="ktexb">▸</span>
+            <textarea class="ktexta" oninput="onEX('${tt.id}','${x.id}','text',this)">${e(x.text)}</textarea>
+            <button class="ktexx" onclick="delEX('${tt.id}','${x.id}')">✕</button>
+          </div>
+          ${x.imageUrl ? `<img class="ktexim" src="${e(x.imageUrl)}" onerror="this.style.display='none'" />` : ''}
+          <input class="ktexur" value="${e(x.imageUrl||'')}" placeholder="optional image url, press enter..." onchange="onEXImg('${tt.id}','${x.id}',this.value)" />
+        </div>`).join('')}
+        <button class="ktexa" onclick="addEX('${tt.id}')">+ add example</button>
+      </div>
+    </div>`).join('');
+  } else {
+    html += '<div class="empt">⬢ The codex is empty.<div class="empt-em">— Add a term or generate from notes —</div></div>';
+  }
+  html += `<button class="btn-add" onclick="addT()">+ Add key term</button>`;
+  return html;
+}
+
+function rLes() {
+  const ch = CHS.find(c => c.id===cid), s = cs(cid), done = new Set(s.completedLessons);
+  const all = ch.lessons.every(l => done.has(l.n));
+  const tm = ch.lessons.reduce((a,l) => a+l.d, 0);
+  const dm = ch.lessons.filter(l => done.has(l.n)).reduce((a,l) => a+l.d, 0);
+  return `<div class="sec"><span class="st">▸ ${ch.lessons.length} Holocrons · ${tm} min</span>
+    <button class="btn am" onclick="markAll()">${all?'Unmark all':'Mark all viewed'}</button></div>` +
+    ch.lessons.map(l => `<div class="lr">
+      <button class="lcb${done.has(l.n)?' on':''}" onclick="togL(${l.n})">${done.has(l.n)?'✓':''}</button>
+      <span class="ln">L.${String(l.n).padStart(3,'0')}</span>
+      <span class="lt">${e(l.t)}</span>
+      <span class="ld">${l.d}m</span>
+    </div>`).join('') +
+    `<div style="margin-top:11px;padding:10px 12px;background:var(--bg-2);border-radius:var(--r-md);border-left:2px solid #EF9F27;font-family:var(--font-mono);font-size:11px;color:var(--tx-2);letter-spacing:0.05em">▸ ${dm}/${tm} min reviewed · ${done.size}/${ch.lessons.length} complete</div>`;
+}
+
+function rQz() {
+  const s = cs(cid), qs = s.quiz || [], a = s.attempts || [];
+  const last = a[a.length-1];
+  const isAtt = Object.keys(qzAns).length > 0;
+  if (!qs.length) {
+    return `<div class="sec"><span class="st">▸ Force Trials</span></div>
+      <div class="empt">⚖ No trials configured for this chapter.<div class="empt-em">Generate Project+ exam questions to begin training</div>
+        <div style="margin-top:14px"><button class="btn-pri" onclick="aiGenQz()">✦ Generate 8 trial questions</button></div>
+      </div>`;
+  }
+  const submit = isAtt && Object.keys(qzAns).length >= qs.length;
+  let header = `<div class="sec"><span class="st">▸ Force Trials</span>
+    <div style="display:flex;gap:4px"><button class="btn am" onclick="aiGenQz()">✦ regenerate</button>
+      ${isAtt ? `<button class="btn d" onclick="qzReset()">reset</button>` : ''}</div></div>`;
+  let bar = '';
+  if (last || a.length) {
+    bar = `<div class="qzbar">
+      <div><div class="qzscore">${last ? `Best: ${Math.max(...a.map(x => x.score))}/${qs.length}` : 'No attempts'}</div>
+      <div class="qzatt">${a.length} ${a.length===1?'trial':'trials'} completed${last ? ` · last: ${last.score}/${qs.length}` : ''}</div></div>
+      ${submit ? '' : `<button class="btn-pri" onclick="qzSubmit()">${isAtt?'Submit answers':'Begin trial'}</button>`}
+    </div>`;
+  } else {
+    bar = `<div class="qzbar">
+      <div><div class="qzscore">Begin training</div><div class="qzatt">Select an answer for each question</div></div>
+      <button class="btn-pri" onclick="qzSubmit()" ${Object.keys(qzAns).length===0?'disabled':''}>Submit answers</button>
+    </div>`;
+  }
+  const showR = submit || (last && !isAtt);
+  return header + bar + qs.map((q,i) => {
+    const sel = qzAns[q.id];
+    return `<div class="qz">
+      <div><span class="qzn">TRIAL ${String(i+1).padStart(2,'0')}</span></div>
+      <div class="qzq">${e(q.question)}</div>
+      ${q.choices.map((c,j) => {
+        let cls = 'qzc';
+        if (showR) { if (j===q.correct) cls += ' cor'; else if (sel===j) cls += ' inc'; }
+        else if (sel===j) cls += ' sel';
+        return `<div class="${cls}" onclick="${showR?'':`qzSel('${q.id}',${j})`}">
+          <span class="qzl">${String.fromCharCode(65+j)}.</span>
+          <span class="qzt">${e(c)}</span>
+        </div>`;
+      }).join('')}
+      ${showR ? `<div class="qzex"><div class="qzex-l">★ Master's wisdom</div>${e(q.explanation)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function rFc() {
+  const s = cs(cid);
+  let cards = (s.keyTerms||[]).filter(t => t.term && t.definition);
+  if (!cards.length) {
+    return `<div class="sec"><span class="st">▸ Memory Crystals</span></div>
+      <div class="empt">◇ No crystals to study.<div class="empt-em">Add key terms in the codex tab to create crystals</div>
+        <div style="margin-top:14px"><button class="btn-pri" onclick="selT('notes')">Open the codex →</button></div></div>`;
+  }
+  if (fcShuffle) { const map = new Map(cards.map(c => [c.id,c])); cards = fcShuffle.map(id => map.get(id)).filter(Boolean); }
+  if (fcIdx >= cards.length) fcIdx = 0;
+  const c = cards[fcIdx];
+  const total = cards.length, mastered = cards.filter(t => t.mastered).length;
+  return `<div class="sec"><span class="st">▸ Memory Crystals · ${total}</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn" onclick="fcShuf()">${fcShuffle?'unshuffle':'shuffle'}</button>
+      <button class="btn am" onclick="fcResetMastery()">reset mastery</button>
+    </div></div>
+  <div class="fcwrap">
+    <div class="fcprog">▸ ${fcIdx+1} / ${total}  ·  ✦ ${mastered} mastered</div>
+    <div class="fc" onclick="fcF()">
+      <div class="fc-side">${fcFlip?'definition':'term'}</div>
+      ${fcFlip ? `<div class="fcback">${e(c.definition)}</div>` : `<div class="fcfront">${e(c.term)}</div>`}
+      <div class="fchint">tap to ${fcFlip?'see term':'reveal'}</div>
+    </div>
+    <div class="fcctrl">
+      <button class="btn" onclick="fcPrev()" ${fcIdx===0?'disabled':''}>◀ prev</button>
+      <button class="btn am" onclick="fcMast('${c.id}')">${c.mastered?'✓ mastered':'mark mastered'}</button>
+      <button class="btn" onclick="fcNext()" ${fcIdx===total-1?'disabled':''}>next ▶</button>
+    </div>
+  </div>`;
+}
+
+function rSch() {
+  const s = cs(cid);
+  const all = [...(s.sessions||[])].sort((a,b) => new Date(a.date) - new Date(b.date));
+  const now = new Date();
+  const up = all.filter(x => new Date(x.date) >= now);
+  const past = all.filter(x => new Date(x.date) < now);
+  return `<div class="sec"><span class="st">▸ Holocron · Schedule Training</span></div>
+  <div class="sf">
+    <div class="sfg">
+      <div><label>Date & time</label><input type="datetime-local" class="sfin" id="sd" /></div>
+      <div><label>Duration (min)</label><input type="number" class="sfin" id="sdr" value="60" min="15" step="15" /></div>
+    </div>
+    <label>Training focus</label>
+    <input class="sfin" id="sn" placeholder="e.g. review CPM and project reserves..." />
+    <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn-pri" onclick="addS()">+ Schedule</button>
+      <button class="btn am" onclick="addSGCal()">+ Schedule & open Google Calendar ↗</button></div>
+  </div>` +
+  (up.length ? `<div class="st-sub">▸ Upcoming Sessions (${up.length})</div>` + up.map(x => `<div class="ssi">
+    <div class="ssidt">▸ ${fmtD(x.date)}</div>
+    <div class="ssin">${e(x.notes||'Training session')} · ${x.dur}m</div>
+    <button class="btn am" onclick="openGCal('${x.id}')">↗ gcal</button>
+    <button class="btn d" onclick="delS('${x.id}')">✕</button>
+  </div>`).join('') : '<div style="font-size:12px;color:var(--tx-2);font-family:var(--font-mono);letter-spacing:0.05em;text-align:center;padding:12px">▸ No upcoming sessions scheduled</div>') +
+  (past.length ? `<div class="st-sub">▸ Past Sessions</div>` + past.slice(-5).reverse().map(x => `<div class="ssi" style="opacity:.55;border-left-color:var(--bd-2)">
+    <div class="ssidt">✓ ${fmtD(x.date)}</div>
+    <div class="ssin">${e(x.notes||'Training session')} · ${x.dur}m</div>
+  </div>`).join('') : '');
+}
+
+function fmtD(d) { try { return new Date(d).toLocaleString('en-US', {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); } catch(err) { return d; } }
+
+// =============================================
+// ACTIONS
+// =============================================
+function selCh(id) { cid=id; ctab='notes'; qzAns={}; fcIdx=0; fcFlip=false; fcShuffle=null; render(); }
+function selT(t) {
+  ctab = t;
+  if (t==='quiz' && !Object.keys(qzAns).length) {
+    const s = cs(cid), la = s.attempts[s.attempts.length-1];
+    qzAns = la ? (la.answers || {}) : {};
+  }
+  rTabs(); rTC();
+}
+function setS(v) { cs(cid).status=v; sv(); rSb(); rHd(); }
+function setC(v) {
+  const s = cs(cid);
+  s.confidence = s.confidence===v ? 0 : v;
+  sv();
+  document.getElementById('strEl').innerHTML = rStars(s.confidence);
+  document.getElementById('clbl').textContent = s.confidence ? `Force: ${s.confidence}/5` : 'Set Force';
+  rSb();
+}
+
+// Notes
+function addN() {
+  const s = cs(cid), id = 'n'+Date.now();
+  s.notes.push({id, text:'', tag:''});
+  rTC(); sv();
+  setTimeout(() => document.getElementById('nta-'+id)?.focus(), 30);
+}
+function onNC(id, el) { el.style.height='auto'; el.style.height=el.scrollHeight+'px'; const n=fN(id); if(n) n.text=el.value; sv(); }
+function onTag(id, v) { const n=fN(id); if(n){ n.tag=v; sv(); } }
+function delN(id) { const s=cs(cid); s.notes=s.notes.filter(n=>n.id!==id); rTC(); sv(); }
+function fN(id) { for (const c of Object.values(st)) { const n=(c.notes||[]).find(x=>x.id===id); if(n) return n; } return null; }
+
+// Key terms
+function addT() { const s=cs(cid), id='k'+Date.now(); s.keyTerms.push({id,term:'',definition:'',examples:[],mastered:false}); rTC(); sv(); }
+function onKT(id, f, el) { const t=cs(cid).keyTerms.find(t=>t.id===id); if(t){ t[f==='term'?'term':'definition']=el.value; el.style.height='auto'; el.style.height=el.scrollHeight+'px'; sv(); } }
+function delT(id) { const s=cs(cid); s.keyTerms=s.keyTerms.filter(t=>t.id!==id); rTC(); sv(); }
+
+// Examples
+function addEX(tid) { const t=cs(cid).keyTerms.find(t=>t.id===tid); if(t){ t.examples.push({id:'x'+Date.now(),text:'',imageUrl:''}); rTC(); sv(); } }
+function onEX(tid, xid, f, el) {
+  const t=cs(cid).keyTerms.find(t=>t.id===tid);
+  if(t){ const x=t.examples.find(x=>x.id===xid); if(x){ x.text=el.value; el.style.height='auto'; el.style.height=el.scrollHeight+'px'; sv(); } }
+}
+function onEXImg(tid, xid, v) {
+  const t=cs(cid).keyTerms.find(t=>t.id===tid);
+  if(t){ const x=t.examples.find(x=>x.id===xid); if(x){ x.imageUrl=v; sv(); rTC(); } }
+}
+function delEX(tid, xid) { const t=cs(cid).keyTerms.find(t=>t.id===tid); if(t){ t.examples=t.examples.filter(x=>x.id!==xid); rTC(); sv(); } }
+
+// Lessons
+function togL(n) {
+  const s = cs(cid), i = s.completedLessons.indexOf(n);
+  if (i > -1) s.completedLessons.splice(i,1);
+  else s.completedLessons.push(n);
+  sv(); rTC(); rHd(); rSb(); rBot();
+}
+function markAll() {
+  const ch = CHS.find(c => c.id===cid), s = cs(cid);
+  const all = ch.lessons.every(l => s.completedLessons.includes(l.n));
+  s.completedLessons = all ? [] : ch.lessons.map(l => l.n);
+  sv(); rTC(); rHd(); rSb(); rBot();
+}
+
+// Quiz
+function qzSel(qid, j) { qzAns[qid] = j; rTC(); }
+function qzSubmit() {
+  const s = cs(cid), qs = s.quiz;
+  let score = 0;
+  qs.forEach(q => { if (qzAns[q.id]===q.correct) score++; });
+  s.attempts.push({date: new Date().toISOString(), score, total: qs.length, answers: {...qzAns}});
+  sv(); rTC(); rBot();
+}
+function qzReset() { qzAns = {}; rTC(); }
+
+// Flashcards
+function fcF() { fcFlip = !fcFlip; rTC(); }
+function fcPrev() { if (fcIdx > 0) { fcIdx--; fcFlip=false; rTC(); } }
+function fcNext() {
+  const s = cs(cid), total = s.keyTerms.filter(t => t.term && t.definition).length;
+  if (fcIdx < total-1) { fcIdx++; fcFlip=false; rTC(); }
+}
+function fcMast(id) { const t=cs(cid).keyTerms.find(t=>t.id===id); if(t){ t.mastered = !t.mastered; sv(); rTC(); } }
+function fcShuf() {
+  if (fcShuffle) { fcShuffle = null; }
+  else {
+    const ids = cs(cid).keyTerms.filter(t => t.term && t.definition).map(t => t.id);
+    for (let i=ids.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [ids[i],ids[j]]=[ids[j],ids[i]]; }
+    fcShuffle = ids;
+  }
+  fcIdx = 0; fcFlip = false; rTC();
+}
+function fcResetMastery() { cs(cid).keyTerms.forEach(t => t.mastered=false); sv(); rTC(); }
+
+// Schedule + Google Calendar
+function gcalUrl(title, dateStr, durMin, details) {
+  const start = new Date(dateStr);
+  const end = new Date(start.getTime() + (durMin||60)*60000);
+  const fmt = d => d.toISOString().replace(/[-:]|\.\d{3}/g,'').slice(0,15) + 'Z';
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(start)}/${fmt(end)}&details=${encodeURIComponent(details||'')}`;
+}
+function addS() {
+  const dt = document.getElementById('sd').value;
+  if (!dt) return showToast('Please pick a date and time', 'err');
+  const s = cs(cid);
+  s.sessions = s.sessions || [];
+  s.sessions.push({
+    id: 's'+Date.now(),
+    date: dt,
+    dur: parseInt(document.getElementById('sdr').value) || 60,
+    notes: document.getElementById('sn').value
+  });
+  sv(); rTC();
+  showToast('Session scheduled', 'ok');
+}
+function addSGCal() {
+  const dt = document.getElementById('sd').value;
+  if (!dt) return showToast('Please pick a date and time', 'err');
+  const dur = parseInt(document.getElementById('sdr').value) || 60;
+  const note = document.getElementById('sn').value;
+  const ch = CHS.find(c => c.id===cid);
+  const s = cs(cid);
+  s.sessions = s.sessions || [];
+  s.sessions.push({id:'s'+Date.now(), date:dt, dur, notes:note});
+  sv(); rTC();
+  const title = `Project+ Study: ${ch.title}`;
+  const details = `Studying "${ch.title}" (${ch.obj}) for CompTIA Project+ PK0-005.${note ? '\n\nFocus: '+note : ''}`;
+  window.open(gcalUrl(title, dt, dur, details), '_blank', 'noopener');
+}
+function openGCal(id) {
+  const s = cs(cid), ses = s.sessions.find(x => x.id===id);
+  if (!ses) return;
+  const ch = CHS.find(c => c.id===cid);
+  window.open(gcalUrl(`Project+ Study: ${ch.title}`, ses.date, ses.dur, `Studying "${ch.title}" (${ch.obj}) for CompTIA Project+ PK0-005.${ses.notes ? '\n\nFocus: '+ses.notes : ''}`), '_blank', 'noopener');
+}
+function delS(id) { const s=cs(cid); s.sessions=s.sessions.filter(x=>x.id!==id); sv(); rTC(); }
+
+// =============================================
+// AI FEATURES
+// =============================================
+function getApiKey() { return localStorage.getItem(KEY_KEY); }
+
+function ensureKey() {
+  if (getApiKey()) return true;
+  document.getElementById('keyPromptBg').classList.add('on');
+  setTimeout(() => document.getElementById('promptKeyInput')?.focus(), 100);
+  return false;
+}
+
+function dismissKeyPrompt() { document.getElementById('keyPromptBg').classList.remove('on'); }
+function saveKeyFromPrompt() {
+  const k = document.getElementById('promptKeyInput').value.trim();
+  if (!k) return showToast('Enter a key first', 'err');
+  if (!k.startsWith('sk-ant-')) return showToast('Key should start with sk-ant-', 'err');
+  localStorage.setItem(KEY_KEY, k);
+  document.getElementById('promptKeyInput').value = '';
+  dismissKeyPrompt();
+  showToast('Key saved · AI features unlocked', 'ok');
+}
+
+async function callAI(prompt, max=1500) {
+  const key = getApiKey();
+  if (!key) { ensureKey(); throw new Error('No API key'); }
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: currentModel,
+      max_tokens: max,
+      messages: [{role: 'user', content: prompt}]
+    })
+  });
+  if (!res.ok) {
+    const errBody = await res.text();
+    let msg = `API error ${res.status}`;
+    try { const j = JSON.parse(errBody); if (j.error?.message) msg = j.error.message; } catch{}
+    if (res.status === 401) msg = 'Invalid API key — check Settings';
+    if (res.status === 429) msg = 'Rate limit hit — try again in a moment';
+    throw new Error(msg);
+  }
+  const d = await res.json();
+  return (d.content?.[0]?.text || '').replace(/```json|```/g, '').trim();
+}
+
+async function aiClean1(noteId) {
+  if (!ensureKey()) return;
+  const n = fN(noteId);
+  if (!n || !n.text.trim()) return;
+  const btn = document.getElementById('nb-'+noteId);
+  if (btn) { btn.disabled=true; btn.textContent='✦ cleaning...'; }
+  try {
+    const t = await callAI(`Clean up this CompTIA Project+ study note. Fix grammar, improve clarity, keep concise for exam study. Return only the cleaned note:\n\n${n.text}`);
+    if (t) { n.text=t; sv(); rTC(); showToast('Note cleaned', 'ok'); }
+  } catch(err) { showToast(err.message, 'err'); console.error(err); }
+  finally { if (btn) { btn.disabled=false; btn.textContent='✦ clean'; } }
+}
+
+async function aiCleanAll() {
+  if (!ensureKey()) return;
+  const s = cs(cid), notes = s.notes;
+  if (!notes.length) return showToast('No notes to clean', 'err');
+  const ch = CHS.find(c => c.id===cid);
+  const btn = document.getElementById('cAll');
+  if (btn) { btn.disabled=true; btn.textContent='cleaning...'; }
+  try {
+    const c = notes.map((n,i) => `NOTE_${i}:\n${n.text}`).join('\n\n---\n\n');
+    const t = await callAI(`Clean up these ${notes.length} study notes for "${ch.title}" (CompTIA Project+). Fix grammar, improve clarity, make exam-ready. Return ONLY a JSON array: [{"idx":0,"text":"..."},{"idx":1,"text":"..."},...]\n\n${c}`, 2500);
+    JSON.parse(t).forEach(x => { if (notes[x.idx]) notes[x.idx].text=x.text; });
+    sv(); showToast('All notes cleaned', 'ok');
+  } catch(err) { showToast(err.message, 'err'); console.error(err); }
+  finally { rTC(); }
+}
+
+async function aiExpAll() {
+  if (!ensureKey()) return;
+  const s = cs(cid), notes = s.notes;
+  if (!notes.length) return showToast('No notes to expand', 'err');
+  const ch = CHS.find(c => c.id===cid);
+  try {
+    const c = notes.map((n,i) => `NOTE_${i}:\n${n.text}`).join('\n\n---\n\n');
+    const t = await callAI(`Expand these ${notes.length} study notes for "${ch.title}" (CompTIA Project+). Add context, exam tips, key details. Keep focused. Return ONLY: [{"idx":0,"text":"..."},...]\n\n${c}`, 3000);
+    JSON.parse(t).forEach(x => { if (notes[x.idx]) notes[x.idx].text=x.text; });
+    sv(); showToast('Notes expanded', 'ok');
+  } catch(err) { showToast(err.message, 'err'); console.error(err); }
+  finally { rTC(); }
+}
+
+async function aiGenT() {
+  if (!ensureKey()) return;
+  const s = cs(cid), ch = CHS.find(c => c.id===cid);
+  const txt = s.notes.map(n => n.text).filter(Boolean).join('\n');
+  const btn = document.getElementById('genB');
+  if (btn) { btn.disabled=true; btn.textContent='generating...'; }
+  try {
+    const p = txt.trim()
+      ? `Extract 6-8 key terms from these notes for "${ch.title}":\n\n${txt}`
+      : `Generate 6-8 key terms for CompTIA Project+ topic "${ch.title}" (${ch.obj})`;
+    const t = await callAI(p + '\n\nReturn ONLY a JSON array: [{"term":"...","definition":"..."},...]');
+    JSON.parse(t).forEach(x => {
+      s.keyTerms.push({id:'k'+Date.now()+Math.random().toString(36).slice(2,7), term:x.term, definition:x.definition, examples:[], mastered:false});
+    });
+    sv(); showToast('Terms generated', 'ok');
+  } catch(err) { showToast(err.message, 'err'); console.error(err); }
+  finally { rTC(); }
+}
+
+async function aiDefT() {
+  if (!ensureKey()) return;
+  const s = cs(cid), blank = s.keyTerms.filter(t => t.term && !t.definition.trim());
+  if (!blank.length) return showToast('No blank definitions to fill', 'err');
+  try {
+    const t = await callAI(`Define these CompTIA Project+ terms: ${blank.map(t => t.term).join(', ')}. Return ONLY: [{"term":"...","definition":"..."},...]`);
+    JSON.parse(t).forEach(x => {
+      const f = s.keyTerms.find(t => t.term.toLowerCase()===x.term.toLowerCase());
+      if (f && !f.definition.trim()) f.definition = x.definition;
+    });
+    sv(); showToast('Definitions filled in', 'ok');
+  } catch(err) { showToast(err.message, 'err'); console.error(err); }
+  finally { rTC(); }
+}
+
+async function aiGenQz() {
+  if (!ensureKey()) return;
+  const ch = CHS.find(c => c.id===cid), s = cs(cid);
+  const tc = document.getElementById('tc');
+  tc.innerHTML = '<div class="empt">⚖ The Master is preparing your trial...<div class="empt-em">generating exam-style questions</div></div>';
+  try {
+    const t = await callAI(`Generate 8 CompTIA Project+ (PK0-005) exam-style multiple choice questions for "${ch.title}" (${ch.obj}). Mix difficulty levels. Return ONLY a JSON array: [{"question":"...","choices":["A","B","C","D"],"correct":0,"explanation":"why this is correct"},...]. Use real exam-style wording. The "correct" field is the index 0-3.`, 3500);
+    const arr = JSON.parse(t);
+    s.quiz = arr.map((q,i) => ({id:'q'+Date.now()+i, question:q.question, choices:q.choices, correct:q.correct, explanation:q.explanation}));
+    s.attempts = []; qzAns = {}; sv();
+    showToast('Trial ready', 'ok');
+  } catch(err) { showToast(err.message, 'err'); console.error(err); }
+  finally { rTC(); rBot(); }
+}
+
+function ar() { document.querySelectorAll('textarea').forEach(ta => { ta.style.height='auto'; ta.style.height=ta.scrollHeight+'px'; }); }
+
+// =============================================
+// SETTINGS / THEME / KEY MANAGEMENT
+// =============================================
+function openSettings() {
+  document.getElementById('apiKeyInput').value = getApiKey() || '';
+  document.getElementById('modelSelect').value = currentModel;
+  document.getElementById('themeSelect').value = localStorage.getItem(THEME_KEY) || 'auto';
+  document.getElementById('settingsBg').classList.add('on');
+}
+function closeSettings(ev) {
+  if (ev && ev.target.id !== 'settingsBg') return;
+  document.getElementById('settingsBg').classList.remove('on');
+}
+function saveKey() {
+  const v = document.getElementById('apiKeyInput').value.trim();
+  if (!v) return showToast('Enter a key first', 'err');
+  if (!v.startsWith('sk-ant-')) return showToast('Key should start with sk-ant-', 'err');
+  localStorage.setItem(KEY_KEY, v);
+  showToast('Key saved', 'ok');
+}
+function clearKey() {
+  localStorage.removeItem(KEY_KEY);
+  document.getElementById('apiKeyInput').value = '';
+  showToast('Key cleared', 'ok');
+}
+function saveModel(v) { currentModel=v; localStorage.setItem(MODEL_KEY,v); showToast('Model: '+v.split('-').slice(1,3).join(' '), 'ok'); }
+function setTheme(v) {
+  localStorage.setItem(THEME_KEY, v);
+  applyTheme(v);
+}
+function applyTheme(v) {
+  if (v === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', v);
+}
+
+function resetAll() {
+  if (!confirm('Erase ALL study data (notes, key terms, quizzes, schedule)? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  st = mks(); cid='c1'; ctab='notes'; qzAns={}; fcIdx=0; fcFlip=false; fcShuffle=null;
+  closeSettings();
+  render();
+  showToast('All data erased', 'ok');
+}
+
+// Export / Import
+function exportData() {
+  const data = JSON.stringify(st, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `projectplus-codex-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Backup downloaded', 'ok');
+}
+function importData() { document.getElementById('importFile').click(); }
+function handleImport(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  if (!confirm('Import this file? Current data will be replaced.')) { ev.target.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      st = data;
+      sv(); render();
+      showToast('Data imported', 'ok');
+    } catch(err) { showToast('Invalid file', 'err'); }
+  };
+  reader.readAsText(file);
+  ev.target.value = '';
+}
+
+// Toast
+let toastTimer;
+function showToast(msg, kind) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast on ' + (kind || '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('on'), 2400);
+}
+
+init();
+</script>
+</body>
+</html>
